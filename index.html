@@ -6,15 +6,26 @@
     <link rel="stylesheet" href="css/reset.css" type="text/css" />
     <link rel="stylesheet" href="css/index.css" type="text/css" />
     <script type="text/javascript" src="js/AIRAliases.js"></script>
+    <script type="text/javascript" src="js/AIRIntrospector.js"></script>
     <script type="text/javascript" src="js/jquery-1.6.1.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   </head>
   <body>
-    <form>
-      <input type="text" name="comment" />
-      <input type="button" value="コメント" name="send" id="send" />
-    </form>
-    <div id="comments"></div>
-    <div id="users"></div>
+    <div id="comments">
+      <div id="input">
+        <textarea name="comment" rows="1" cols="30"></textarea>
+        <input type="button" value="コメント" name="send" id="send" />
+      </div>
+    </div>
+    <div id="users">
+      <div class="own">
+        <label for="to_user">ニックネーム：</label><input id="to_user" name="user" type="text" class="user" maxlength="15" size="15px"/>
+      </div>
+      <div class="connect">
+        <label for="to_address">IP:</label><input id="to_address" name="address" />
+        <input type="button" class="connect" value="追加"/>
+      </div>
+      <!-- <div class="user"></div> -->
+    </div>
   </body>
 </html>

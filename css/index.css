@@ -1,0 +1,15 @@
+#comments {
+  float: left;
+  height: 100%;
+  width: 300px;
+}
+
+#users {
+  float: left;
+  height: 100%;
+  width: 300px;
+}
+
+textarea[name=comment] {
+  height: 20px;
+}
