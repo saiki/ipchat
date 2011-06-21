@@ -54,12 +54,13 @@ function onRecieveConnect(recieveEvent) {
   var socket = recieveEvent.socket;
   socket.addEventListener("socketData", function(e) {
     var message = socket.readUTFBytes(socket.bytesAvailable);
+    message = message.replace(/\n/g, "<br/>");
     var user = clients[socket.remoteAddress];
     var node = "<div class=\"message\">"
-                + "<p class=\"user\">"+user+"</p>"
+                + "<p class=\"user\">"+user+"&gt;</p>"
                 + "<p class=\"comment\">"+message+"</p>"
                 + "</div>";
-    $("#comments").append(node);
+    $("#comments div.comments").prepend(node);
     socket.close();
   });
 }

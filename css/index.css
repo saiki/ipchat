@@ -1,5 +1,6 @@
 body {
   background-color: #E7F0F4;
+  overflow-y: scroll;
 }
 
 #header {
@@ -8,6 +9,8 @@ body {
 
 #contents {
   margin-top: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 #comments {
@@ -20,7 +23,6 @@ body {
   border-width: 2px;
   border-style: solid;
   min-height: 100px;
-  margin-left: 5px;
   padding: 10px;
 }
 
