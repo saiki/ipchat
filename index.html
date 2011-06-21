@@ -11,21 +11,30 @@
     <script type="text/javascript" src="js/index.js"></script>
   </head>
   <body>
-    <div id="comments">
-      <div id="input">
-        <textarea name="comment" rows="1" cols="30"></textarea>
-        <input type="button" value="コメント" name="send" id="send" />
-      </div>
+    <div id="header">
+      <marquee>テスト中</marquee>
+      <span class="logo"></span>
+      <span class="close"></span>
     </div>
-    <div id="users">
-      <div class="own">
-        <label for="to_user">ニックネーム：</label><input id="to_user" name="user" type="text" class="user" maxlength="15" size="15px"/>
+    <div id="contents">
+      <div id="comments">
+        <div class="input">
+          <textarea name="comment" rows="1" cols="30"></textarea>
+          <input type="button" value="コメント" name="send" id="send" />
+        </div>
       </div>
-      <div class="connect">
-        <label for="to_address">IP:</label><input id="to_address" name="address" />
-        <input type="button" class="connect" value="追加"/>
+      <div id="users">
+        <div class="own">
+          <label for="to_user">ニックネーム：</label><input id="to_user" name="user" type="text" class="user" maxlength="15" size="15px"/>
+        </div>
+        <hr />
+        <div class="connect">
+          <label for="to_address">IP:</label><input id="to_address" name="address" />
+          <input type="button" class="connect" value="接続"/>
+        </div>
+        <hr />
+        <!-- <div class="user"></div> -->
       </div>
-      <!-- <div class="user"></div> -->
     </div>
   </body>
 </html>

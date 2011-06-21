@@ -1,13 +1,74 @@
+body {
+  background-color: #E7F0F4;
+}
+
+#header {
+  min-height: 25px;
+}
+
+#contents {
+  margin-top: 5px;
+}
+
 #comments {
   float: left;
   height: 100%;
   width: 300px;
+  -webkit-border-radius: 10px;
+  background-color: #FFFFFF;
+  border-color: #C7DAE2;
+  border-width: 2px;
+  border-style: solid;
+  min-height: 100px;
+  margin-left: 5px;
+  padding: 10px;
 }
 
 #users {
   float: left;
   height: 100%;
   width: 300px;
+  -webkit-border-radius: 10px;
+  background-color: #FFFFFF;
+  border-color: #C7DAE2;
+  border-width: 2px;
+  border-style: solid;
+  min-height: 100px;
+  margin-left: 5px;
+  padding: 10px;
+}
+
+#comments div.message {
+  border-bottom-color: #C7DAE2;
+  border-bottom-style: solid;
+  border-bottom-width: 2px; 
+  padding-bottom: 10px;
+  padding-top: 10px;
+}
+
+#comments div.input {
+  border-bottom-color: #C7DAE2;
+  border-bottom-style: solid;
+  border-bottom-width: 2px; 
+  padding-bottom: 10px;
+}
+
+#users div.own {
+  
+}
+
+#users div.connect {
+
+}
+
+#users div.user {
+
+}
+
+hr {
+  border-color: #C7DAE2;
+  border-width: 1px;
+  border-style: solid;
 }
 
 textarea[name=comment] {

@@ -13,13 +13,16 @@ $(function() {
   recieveServer.addEventListener("connect", onRecieveConnect);
   recieveServer.bind(COMMENT_PORT);
   recieveServer.listen();
-  clients["127.0.0.1"] = true;
+  clients["127.0.0.1"] = "自分";
 
   $("#send").click(onComment);
   $("textarea[name=comment]").focus(function(){
     $(this).animate({height: "60px"});
   });
   $("input.connect[type=button]").click(onConnectClick);
+  $("#to_user").focusout(function() {
+    clients["127.0.0.1"] = $(this).val();
+  });
 });
 
 $(window).unload(function() {
