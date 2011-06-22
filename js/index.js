@@ -1,8 +1,6 @@
 var loginServer = null;
 var recieveServer = null;
 var clients = new Object();
-const LOGIN_PORT = 6668; 
-const COMMENT_PORT = 6667;
 
 $(function() {
   loginServer = new air.ServerSocket();
@@ -13,92 +11,20 @@ $(function() {
   recieveServer.addEventListener("connect", onRecieveConnect);
   recieveServer.bind(COMMENT_PORT);
   recieveServer.listen();
-  clients["127.0.0.1"] = "自分";
+  clients["127.0.0.1"] = "127.0.0.1";
 
   $("#send").click(onComment);
   $("textarea[name=comment]").focus(function(){
     $(this).animate({height: "60px"});
   });
   $("input.connect[type=button]").click(onConnectClick);
+  $("#to_user").val("127.0.0.1");
   $("#to_user").focusout(function() {
     clients["127.0.0.1"] = $(this).val();
   });
+  $(window).unload(function() {
+    loginServer.close();
+    recieveServer.close();
+  });
 });
 
-$(window).unload(function() {
-  loginServer.close();
-  recieveServer.close();
-});
-
-function onLoginConnect(loginEvent) {
-  var socket = loginEvent.socket;
-  loginEvent.socket.addEventListener("socketData", function(e) {
-    var address = socket.remoteAddress;
-    var userName = socket.readUTFBytes(socket.bytesAvailable);
-    if (address == undefined) {
-      address = socket.localAddress;
-    }
-    if (!clientsConnected(address)) {
-      clients[address] = userName;
-      $("#users").append(createUserNode(address, userName));
-    } else {
-      clients[address] = userName;
-    }
-    socket.writeUTFBytes($("#to_user").val());
-    socket.flush();
-    socket.close();
-  });
-}
-
-function onRecieveConnect(recieveEvent) {
-  var socket = recieveEvent.socket;
-  socket.addEventListener("socketData", function(e) {
-    var message = socket.readUTFBytes(socket.bytesAvailable);
-    message = message.replace(/\n/g, "<br/>");
-    var user = clients[socket.remoteAddress];
-    var node = "<div class=\"message\">"
-                + "<p class=\"user\">"+user+"&gt;</p>"
-                + "<p class=\"comment\">"+message+"</p>"
-                + "</div>";
-    $("#comments div.comments").prepend(node);
-    socket.close();
-  });
-}
-
-function onComment() {
-  for (address in clients) {
-    var socket = new air.Socket();
-    socket.connect(address, COMMENT_PORT);
-    socket.writeUTFBytes($("textarea[name=comment]").val());
-    $("textarea[name=comment]").val("");
-    socket.flush();
-  }
-}
-
-function onConnectClick() {
-  var address = $("#to_address").val();
-  var socket = new air.Socket();
-  socket.addEventListener("socketData", function() {
-    var name = socket.readUTFBytes(socket.bytesAvailable);
-    address = socket.remoteAddress;
-    if (!clientsConnected(address)) {
-      $("#users").append(createUserNode(address, name));
-    }
-    socket.close();
-  });
-  socket.connect(address, LOGIN_PORT);
-  socket.writeUTFBytes($("#to_user").val());
-  socket.flush();
-}
-
-function createUserNode(address, name) {
-  var node = "<div class=\"user\">"
-           + "<span class=\"name\">"+name+"</span>:"
-           + "<span class=\"address\">"+address+"</span>"
-           + "</div>";
-  return node;
-}
-
-function clientsConnected(address) {
-  return clients[address] != undefined;
-}
