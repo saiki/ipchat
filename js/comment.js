@@ -1,13 +1,10 @@
 const COMMENT_PORT = 6667;
-var sockets = new Object();
+var sockets = new Array();
 
 function onRecieveConnect(recieveEvent) {
-  var socket = recieveEvent.socket;
-  air.Introspector.Console.log("recieve connect");
-  socket.addEventListener("socketData", function(e) {
-    air.Introspector.Console.log("recieve socketData");
+  recieveEvent.socket.addEventListener("socketData", function(e) {
+    var socket = e.target;
     var message = socket.readUTFBytes(socket.bytesAvailable);
-    air.Introspector.Console.log("recieve read");
     message = message.replace(/\n/g, "<br/>");
     var user = clients[socket.remoteAddress];
     var node = "<div class=\"message\">"
@@ -15,32 +12,22 @@ function onRecieveConnect(recieveEvent) {
                 + "<p class=\"comment\">"+message+"</p>"
                 + "</div>";
     $("#comments div.comments").prepend(node);
-    air.Introspector.Console.log("recieve write");
     socket.writeUTFBytes("ok");
     socket.flush();
-    air.Introspector.Console.log("recieve flush");
+    socket.close();
   });
 }
 
-
 function onComment() {
   for (address in clients) {
-    sockets[address] = new air.Socket();
-    sockets[address].addEventListener("socketData", function() {
-      air.Introspector.Console.log("socketData");
-      var okng = sockets[address].readUTFBytes(sockets[address].bytesAvailable);
-      if (okng != "ok") {
-        alert(okng);
-      }
-      sockets[address].close();
-      sockets[address] = null;
+    var socket = new air.Socket();
+    socket.addEventListener("socketData", function() {
+      var okng = socket.readUTFBytes(socket.bytesAvailable);
+      socket.close();
     });
-    sockets[address].connect(address, COMMENT_PORT);
-    air.Introspector.Console.log("connect:" + address);
-    sockets[address].writeUTFBytes($("textarea[name=comment]").val());
-    air.Introspector.Console.log("write");
-    sockets[address].flush();
-    air.Introspector.Console.log("flush");
-    $("textarea[name=comment]").val("");
+    socket.connect(address, COMMENT_PORT);
+    socket.writeUTFBytes($("textarea[name=comment]").val());
+    socket.flush();
   }
+  $("textarea[name=comment]").val("");
 }
