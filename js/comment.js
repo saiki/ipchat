@@ -1,7 +1,7 @@
 const COMMENT_PORT = 6667;
 var sockets = new Array();
 
-function onRecieveConnect(recieveEvent) {
+function onCommentConnect(recieveEvent) {
   recieveEvent.socket.addEventListener("socketData", function(e) {
     var socket = e.target;
     var message = socket.readUTFBytes(socket.bytesAvailable);
@@ -18,7 +18,7 @@ function onRecieveConnect(recieveEvent) {
   });
 }
 
-function onComment() {
+function onCommentClick() {
   for (address in clients) {
     var socket = new air.Socket();
     socket.addEventListener("socketData", function() {

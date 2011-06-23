@@ -8,12 +8,12 @@ $(function() {
   loginServer.bind(LOGIN_PORT);
   loginServer.listen();
   recieveServer = new air.ServerSocket();
-  recieveServer.addEventListener("connect", onRecieveConnect);
+  recieveServer.addEventListener("connect", onCommentConnect);
   recieveServer.bind(COMMENT_PORT);
   recieveServer.listen();
   clients["127.0.0.1"] = "127.0.0.1";
 
-  $("#send").click(onComment);
+  $("#send").click(onCommentClick);
   $("textarea[name=comment]").focus(function(){
     $(this).animate({height: "60px"});
   });
